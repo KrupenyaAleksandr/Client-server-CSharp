@@ -20,9 +20,19 @@ namespace Client.Dialog
         string jsonRequest;
         byte[] msg;
         Socket sSender = null;
+        byte[] bytes = new byte[10240];
+        string jsonResponse;
         public FormAddRequest()
         {
             InitializeComponent();
+        }
+
+        public string getResponse
+        {
+            get
+            {
+                return jsonResponse;
+            }
         }
         public void setSocket(ref Socket socket)
         {
@@ -45,6 +55,8 @@ namespace Client.Dialog
                     jsonRequest = JsonConvert.SerializeObject(request);
                     msg = Encoding.UTF8.GetBytes(jsonRequest);
                     sSender.Send(msg);
+                    int bytesRec = sSender.Receive(bytes);
+                    jsonResponse = Encoding.UTF8.GetString(bytes, 0, bytesRec);
                     DialogResult = DialogResult.OK;
                 }
                 catch (System.Exception exception)

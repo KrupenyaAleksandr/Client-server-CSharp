@@ -58,7 +58,7 @@ namespace Client
             formAddRequest.setSocket(ref senderSocket);
             if (formAddRequest.ShowDialog() == DialogResult.OK)
             {
-
+                textBox1.Text = formAddRequest.getResponse;
             }
         }
     }
