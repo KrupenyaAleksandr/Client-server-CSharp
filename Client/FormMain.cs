@@ -24,6 +24,7 @@ namespace Client
         int bytesRec;
 
         readonly FormAddRequest formAddRequest = new FormAddRequest();
+        readonly FormGetRequest formGetRequest = new FormGetRequest();
         public FormMain()
         {
             InitializeComponent();
@@ -37,7 +38,19 @@ namespace Client
             IPAddress ipAddr = ipHost.AddressList[0];
             IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, 11000);
             senderSocket = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            senderSocket.Connect(ipEndPoint);
+            try
+            {
+                senderSocket.Connect(ipEndPoint);
+                buttonDisconnect.Enabled = true;
+                buttonRequestAdd.Enabled = true;
+                buttonRequestGet.Enabled = true;
+                buttonRequestDelete.Enabled = true;
+                buttonRequestUpdate.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("Произошла ошибка при подключении: {0}", ex.Message));
+            }
         }
 
         private void buttonDisconnect_Click(object sender, EventArgs e)
@@ -58,7 +71,16 @@ namespace Client
             formAddRequest.setSocket(ref senderSocket);
             if (formAddRequest.ShowDialog() == DialogResult.OK)
             {
-                textBox1.Text = formAddRequest.getResponse;
+                textBoxResponse.Text = formAddRequest.getResponse;
+            }
+        }
+
+        private void buttonRequestGet_Click(object sender, EventArgs e)
+        {
+            formGetRequest.setSocket(ref senderSocket);
+            if (formGetRequest.ShowDialog() == DialogResult.OK)
+            {
+                textBoxResponse.Text = formGetRequest.getResponse;
             }
         }
     }

@@ -22,7 +22,9 @@
         {
             get
             {
+                if (Type == RequestType.Disconnect) return true;
                 if (Key == string.Empty) return false;
+                if (Airplane == null) return false;
                 if (Airplane.Model == string.Empty) return false;
                 if (Airplane.Manufacturer == string.Empty) return false;
                 return true;

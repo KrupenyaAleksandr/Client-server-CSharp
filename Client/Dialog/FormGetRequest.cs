@@ -1,5 +1,4 @@
 ﻿using ClassLibraryBackend;
-using ClassLibraryBackend.Exception;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,7 @@ using System.Windows.Forms;
 
 namespace Client.Dialog
 {
-    public partial class FormAddRequest : Form
+    public partial class FormGetRequest : Form
     {
         Request request = new Request();
         string jsonRequest;
@@ -22,7 +21,7 @@ namespace Client.Dialog
         Socket sSender = null;
         byte[] bytes = new byte[10240];
         string jsonResponse;
-        public FormAddRequest()
+        public FormGetRequest()
         {
             InitializeComponent();
         }
@@ -38,16 +37,14 @@ namespace Client.Dialog
         {
             sSender = socket;
         }
-        private void buttonRequestOK_Click(object sender, EventArgs e)
+
+        private void buttonOKRequest_Click(object sender, EventArgs e)
         {
-            request.Airplane = new Airplane();
             request.Key = textBoxKey.Text;
-            request.Airplane.Manufacturer = textBoxManufacturer.Text;
-            request.Airplane.Model = textBoxModel.Text;
-            request.Type = RequestType.Add;
-            if (!request.isValid)
+            request.Type = RequestType.Get;
+            if (request.Key == string.Empty)
             {
-                MessageBox.Show("Неккоректный запрос.");
+                MessageBox.Show("Некорректный запрос.");
             }
             else
             {
@@ -60,9 +57,9 @@ namespace Client.Dialog
                     jsonResponse = Encoding.UTF8.GetString(bytes, 0, bytesRec);
                     DialogResult = DialogResult.OK;
                 }
-                catch (System.Exception exception)
+                catch (Exception ex)
                 {
-                    MessageBox.Show(exception.Message);
+                    MessageBox.Show(ex.Message);
                 }
             }
         }

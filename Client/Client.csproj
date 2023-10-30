@@ -56,6 +56,12 @@
     <Compile Include="Dialog\FormAddRequest.Designer.cs">
       <DependentUpon>FormAddRequest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialog\FormGetRequest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\FormGetRequest.Designer.cs">
+      <DependentUpon>FormGetRequest.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +72,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Dialog\FormAddRequest.resx">
       <DependentUpon>FormAddRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\FormGetRequest.resx">
+      <DependentUpon>FormGetRequest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
