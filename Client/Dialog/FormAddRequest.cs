@@ -60,9 +60,9 @@ namespace Client.Dialog
                     jsonResponse = Encoding.UTF8.GetString(bytes, 0, bytesRec);
                     DialogResult = DialogResult.OK;
                 }
-                catch (System.Exception exception)
+                catch (Exception ex)
                 {
-                    MessageBox.Show(exception.Message);
+                    MessageBox.Show(string.Format("Непредвиденная ошибка: {0}", ex.Message));
                 }
             }
         }

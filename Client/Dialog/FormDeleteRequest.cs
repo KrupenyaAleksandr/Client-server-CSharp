@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace Client.Dialog
 {
-    public partial class FormGetRequest : Form
+    public partial class FormDeleteRequest : Form
     {
         Request request = new Request();
         string jsonRequest;
@@ -21,7 +21,7 @@ namespace Client.Dialog
         Socket sSender = null;
         byte[] bytes = new byte[10240];
         string jsonResponse;
-        public FormGetRequest()
+        public FormDeleteRequest()
         {
             InitializeComponent();
         }
@@ -38,35 +38,28 @@ namespace Client.Dialog
             sSender = socket;
         }
 
-        private void buttonOKRequest_Click(object sender, EventArgs e)
+        private void buttonRequestOK_Click(object sender, EventArgs e)
         {
+            request.Type = RequestType.Delete;
             request.Key = textBoxKey.Text;
-            request.Type = RequestType.Get;
             if (request.Key == string.Empty)
             {
-                MessageBox.Show("Некорректный запрос.");
+                MessageBox.Show("Некорректный запрос");
             }
             else
             {
                 try
                 {
+                    
                     jsonRequest = JsonConvert.SerializeObject(request);
                     msg = Encoding.UTF8.GetBytes(jsonRequest);
                     sSender.Send(msg);
-                    int bytesRec = sSender.Receive(bytes);
-                    jsonResponse = Encoding.UTF8.GetString(bytes, 0, bytesRec);
-                    DialogResult = DialogResult.OK;
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(string.Format("Непредвиденная ошибка: {0}", ex.Message));
                 }
             }
-        }
-
-        private void buttonRequestCancel_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
         }
     }
 }

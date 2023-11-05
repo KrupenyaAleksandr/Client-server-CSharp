@@ -25,6 +25,7 @@ namespace Client
 
         readonly FormAddRequest formAddRequest = new FormAddRequest();
         readonly FormGetRequest formGetRequest = new FormGetRequest();
+        readonly FormDeleteRequest formDeleteRequest = new FormDeleteRequest();
         public FormMain()
         {
             InitializeComponent();
@@ -81,6 +82,15 @@ namespace Client
             if (formGetRequest.ShowDialog() == DialogResult.OK)
             {
                 textBoxResponse.Text = formGetRequest.getResponse;
+            }
+        }
+
+        private void buttonRequestDelete_Click(object sender, EventArgs e)
+        {
+            formDeleteRequest.setSocket(ref senderSocket);
+            if (formDeleteRequest.ShowDialog() == DialogResult.OK)
+            {
+                textBoxResponse.Text = formDeleteRequest.getResponse;
             }
         }
     }
