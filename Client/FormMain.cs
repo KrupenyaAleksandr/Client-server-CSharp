@@ -26,6 +26,7 @@ namespace Client
         readonly FormAddRequest formAddRequest = new FormAddRequest();
         readonly FormGetRequest formGetRequest = new FormGetRequest();
         readonly FormDeleteRequest formDeleteRequest = new FormDeleteRequest();
+        readonly FormUpdateRequest formUpdateRequest = new FormUpdateRequest();
         public FormMain()
         {
             InitializeComponent();
@@ -47,6 +48,9 @@ namespace Client
                 buttonRequestGet.Enabled = true;
                 buttonRequestDelete.Enabled = true;
                 buttonRequestUpdate.Enabled = true;
+                labelConnection.Text = "Connected";
+                labelConnection.ForeColor = Color.Green;
+                labelConnection.Location = new Point(labelConnection.Location.X + 6, labelConnection.Location.Y);
             }
             catch (Exception ex)
             {
@@ -60,11 +64,25 @@ namespace Client
             {
                 Type = RequestType.Disconnect,
             };
-            jsonRequest = JsonConvert.SerializeObject(request);
-            msg = Encoding.UTF8.GetBytes(jsonRequest);
-            senderSocket.Send(msg);
-            senderSocket.Shutdown(SocketShutdown.Both);
-            senderSocket.Close();
+            try
+            {
+                jsonRequest = JsonConvert.SerializeObject(request);
+                msg = Encoding.UTF8.GetBytes(jsonRequest);
+                senderSocket.Send(msg);
+                senderSocket.Shutdown(SocketShutdown.Both);
+                senderSocket.Close();
+                buttonRequestAdd.Enabled = false;
+                buttonRequestGet.Enabled = false;
+                buttonRequestUpdate.Enabled = false;
+                buttonRequestDelete.Enabled = false;
+                labelConnection.Text = "Disconnected";
+                labelConnection.ForeColor = Color.Red;
+                labelConnection.Location = new Point(labelConnection.Location.X - 6, labelConnection.Location.Y);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("Произошла ошибка при подключении: {0}", ex.Message));
+            }
         }
 
         private void buttonRequestAdd_Click(object sender, EventArgs e)
@@ -91,6 +109,15 @@ namespace Client
             if (formDeleteRequest.ShowDialog() == DialogResult.OK)
             {
                 textBoxResponse.Text = formDeleteRequest.getResponse;
+            }
+        }
+
+        private void buttonRequestUpdate_Click(object sender, EventArgs e)
+        {
+            formUpdateRequest.setSocket(ref senderSocket);
+            if (formUpdateRequest.ShowDialog() == DialogResult.OK)
+            {
+                textBoxResponse.Text = formUpdateRequest.getResponse;
             }
         }
     }

@@ -41,7 +41,7 @@ namespace Client.Dialog
         private void buttonRequestOK_Click(object sender, EventArgs e)
         {
             request.Type = RequestType.Delete;
-            request.Key = textBoxKey.Text;
+            request.Key = textBox1.Text;
             if (request.Key == string.Empty)
             {
                 MessageBox.Show("Некорректный запрос");
@@ -50,16 +50,23 @@ namespace Client.Dialog
             {
                 try
                 {
-                    
                     jsonRequest = JsonConvert.SerializeObject(request);
                     msg = Encoding.UTF8.GetBytes(jsonRequest);
                     sSender.Send(msg);
+                    int bytesRec = sSender.Receive(bytes);
+                    jsonResponse = Encoding.UTF8.GetString(bytes, 0, bytesRec);
+                    DialogResult = DialogResult.OK;
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(string.Format("Непредвиденная ошибка: {0}", ex.Message));
                 }
             }
+        }
+
+        private void buttonRequestCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
         }
     }
 }
