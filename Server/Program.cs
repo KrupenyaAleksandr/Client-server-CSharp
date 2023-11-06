@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using ClassLibraryBackend;
+using System.IO;
 
 namespace Server
 {
@@ -50,6 +51,9 @@ namespace Server
             Socket socket = o as Socket;
             if (socket != null)
             {
+                Load();
+                Task saveTask = new Task(Save);
+                saveTask.Start();
                 while (true)
                 {
                     try
@@ -147,5 +151,42 @@ namespace Server
             }
         }
 
+        private static void Save()
+        {
+            while (true)
+            {
+                try
+                {
+                    using (StreamWriter jsonStreamWriter = File.CreateText("test.txt"))
+                    {
+                        JsonSerializer jsonSerializer = new JsonSerializer { Formatting = Formatting.Indented };
+                        jsonSerializer.Serialize(jsonStreamWriter, _airplanes);
+                        jsonStreamWriter.Close();
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine($"Error: {exception.Message}");
+                }
+                System.Threading.Thread.Sleep(10000);
+            }
+        }
+
+        private static void Load()
+        {
+            try
+            {
+                JsonSerializer jsonSerializer = new JsonSerializer();
+                using (StreamReader jsonStreamReader = File.OpenText("test.txt"))
+                {
+                    _airplanes = (ConcurrentDictionary<string, Airplane>)jsonSerializer.Deserialize(jsonStreamReader, typeof(ConcurrentDictionary<string, Airplane>));
+                    jsonStreamReader.Close();
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine($"Error: {exception.Message}");
+            }
+        }
     }
 }

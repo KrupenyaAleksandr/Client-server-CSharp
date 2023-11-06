@@ -52,6 +52,7 @@
             this.buttonRequestOK.TabIndex = 12;
             this.buttonRequestOK.Text = "OK";
             this.buttonRequestOK.UseVisualStyleBackColor = true;
+            this.buttonRequestOK.Click += new System.EventHandler(this.buttonRequestOK_Click);
             // 
             // labelKey
             // 

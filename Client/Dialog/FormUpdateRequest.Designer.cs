@@ -104,6 +104,7 @@
             this.buttonRequestOK.TabIndex = 8;
             this.buttonRequestOK.Text = "OK";
             this.buttonRequestOK.UseVisualStyleBackColor = true;
+            this.buttonRequestOK.Click += new System.EventHandler(this.buttonRequestOK_Click);
             // 
             // FormUpdateRequest
             // 

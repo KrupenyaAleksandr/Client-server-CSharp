@@ -38,7 +38,12 @@ namespace Client.Dialog
             sSender = socket;
         }
 
-        private void buttonOKRequest_Click(object sender, EventArgs e)
+        private void buttonRequestCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+        }
+
+        private void buttonRequestOK_Click(object sender, EventArgs e)
         {
             request.Key = textBoxKey.Text;
             request.Type = RequestType.Get;
@@ -62,11 +67,6 @@ namespace Client.Dialog
                     MessageBox.Show(string.Format("Непредвиденная ошибка: {0}", ex.Message));
                 }
             }
-        }
-
-        private void buttonRequestCancel_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
         }
     }
 }
