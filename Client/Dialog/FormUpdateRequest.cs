@@ -21,6 +21,7 @@ namespace Client.Dialog
         Socket sSender = null;
         byte[] bytes = new byte[10240];
         string jsonResponse;
+        string notFound = "\"isSuccess\":false";
         public FormUpdateRequest()
         {
             InitializeComponent();
@@ -40,17 +41,17 @@ namespace Client.Dialog
 
         private void buttonRequestOK_Click(object sender, EventArgs e)
         {
-            request.Key = textBoxKey.Text;
-            request.Airplane = new Airplane();
-            request.Airplane.Manufacturer = textBoxManufacturer.Text;
-            request.Airplane.Model = textBoxModel.Text;
-            request.Type = RequestType.Update;
-            if (request.Key == string.Empty)
+            if (textBoxKey.Text == "" || textBoxManufacturer.Text == "" || textBoxModel.Text == "")
             {
-                MessageBox.Show("Некорректный запрос.");
+                MessageBox.Show("Некорректный запрос");
+                DialogResult = DialogResult.None;
             }
-            else
-            {
+            else {
+                request.Key = textBoxKey.Text;
+                request.Airplane = new Airplane();
+                request.Airplane.Manufacturer = textBoxManufacturer.Text;
+                request.Airplane.Model = textBoxModel.Text;
+                request.Type = RequestType.Update;
                 try
                 {
                     jsonRequest = JsonConvert.SerializeObject(request);
@@ -58,7 +59,12 @@ namespace Client.Dialog
                     sSender.Send(msg);
                     int bytesRec = sSender.Receive(bytes);
                     jsonResponse = Encoding.UTF8.GetString(bytes, 0, bytesRec);
-                    DialogResult = DialogResult.OK;
+                    if (jsonResponse.Contains(notFound))
+                    {
+                        MessageBox.Show("Ключ не найден");
+                        DialogResult = DialogResult.None;
+                    }
+                    else DialogResult = DialogResult.OK;
                 }
                 catch (Exception ex)
                 {

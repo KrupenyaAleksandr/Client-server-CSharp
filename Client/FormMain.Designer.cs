@@ -31,12 +31,12 @@
             this.buttonConnect = new System.Windows.Forms.Button();
             this.buttonDisconnect = new System.Windows.Forms.Button();
             this.textBoxResponse = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.buttonRequestAdd = new System.Windows.Forms.Button();
             this.buttonRequestGet = new System.Windows.Forms.Button();
             this.buttonRequestDelete = new System.Windows.Forms.Button();
             this.buttonRequestUpdate = new System.Windows.Forms.Button();
             this.labelConnection = new System.Windows.Forms.Label();
+            this.userControlAirplaneOutputMain = new Client.UserControlAirplaneOutput();
             this.SuspendLayout();
             // 
             // buttonConnect
@@ -67,14 +67,6 @@
             this.textBoxResponse.Name = "textBoxResponse";
             this.textBoxResponse.Size = new System.Drawing.Size(240, 120);
             this.textBoxResponse.TabIndex = 2;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(26, 200);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(240, 120);
-            this.textBox2.TabIndex = 3;
             // 
             // buttonRequestAdd
             // 
@@ -130,17 +122,24 @@
             this.labelConnection.TabIndex = 8;
             this.labelConnection.Text = "Disconnected";
             // 
+            // userControlAirplaneOutputMain
+            // 
+            this.userControlAirplaneOutputMain.Location = new System.Drawing.Point(26, 200);
+            this.userControlAirplaneOutputMain.Name = "userControlAirplaneOutputMain";
+            this.userControlAirplaneOutputMain.Size = new System.Drawing.Size(240, 120);
+            this.userControlAirplaneOutputMain.TabIndex = 9;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 341);
+            this.Controls.Add(this.userControlAirplaneOutputMain);
             this.Controls.Add(this.labelConnection);
             this.Controls.Add(this.buttonRequestUpdate);
             this.Controls.Add(this.buttonRequestDelete);
             this.Controls.Add(this.buttonRequestGet);
             this.Controls.Add(this.buttonRequestAdd);
-            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBoxResponse);
             this.Controls.Add(this.buttonDisconnect);
             this.Controls.Add(this.buttonConnect);
@@ -155,12 +154,12 @@
         private System.Windows.Forms.Button buttonConnect;
         private System.Windows.Forms.Button buttonDisconnect;
         private System.Windows.Forms.TextBox textBoxResponse;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button buttonRequestAdd;
         private System.Windows.Forms.Button buttonRequestGet;
         private System.Windows.Forms.Button buttonRequestDelete;
         private System.Windows.Forms.Button buttonRequestUpdate;
         private System.Windows.Forms.Label labelConnection;
+        private UserControlAirplaneOutput userControlAirplaneOutputMain;
     }
 }
 

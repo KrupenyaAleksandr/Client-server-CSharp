@@ -27,6 +27,7 @@ namespace Client
         readonly FormGetRequest formGetRequest = new FormGetRequest();
         readonly FormDeleteRequest formDeleteRequest = new FormDeleteRequest();
         readonly FormUpdateRequest formUpdateRequest = new FormUpdateRequest();
+        readonly UserControlAirplaneOutput userControlAirplaneOutput = new UserControlAirplaneOutput();
         public FormMain()
         {
             InitializeComponent();
@@ -99,7 +100,9 @@ namespace Client
             formGetRequest.setSocket(ref senderSocket);
             if (formGetRequest.ShowDialog() == DialogResult.OK)
             {
-                textBoxResponse.Text = formGetRequest.getResponse;
+                textBoxResponse.Text = formGetRequest.Response;
+                userControlAirplaneOutputMain.Manufacter = formGetRequest.Details.Item1;
+                userControlAirplaneOutputMain.Model = formGetRequest.Details.Item2;
             }
         }
 

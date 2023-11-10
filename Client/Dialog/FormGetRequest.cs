@@ -1,5 +1,6 @@
 ﻿using ClassLibraryBackend;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,16 +22,26 @@ namespace Client.Dialog
         Socket sSender = null;
         byte[] bytes = new byte[10240];
         string jsonResponse;
+        string notFound = "\"isSuccess\":false";
+        (string, string) airplaneDetails;
         public FormGetRequest()
         {
             InitializeComponent();
         }
 
-        public string getResponse
+        public string Response
         {
             get
             {
                 return jsonResponse;
+            }
+        }
+
+        public (string, string) Details
+        {
+            get
+            {
+                return airplaneDetails;
             }
         }
         public void setSocket(ref Socket socket)
@@ -45,14 +56,15 @@ namespace Client.Dialog
 
         private void buttonRequestOK_Click(object sender, EventArgs e)
         {
-            request.Key = textBoxKey.Text;
-            request.Type = RequestType.Get;
-            if (request.Key == string.Empty)
+            if (textBoxKey.Text == "")
             {
-                MessageBox.Show("Некорректный запрос.");
+                MessageBox.Show("Некорректный запрос");
+                DialogResult = DialogResult.None;
             }
             else
             {
+                request.Key = textBoxKey.Text;
+                request.Type = RequestType.Get;
                 try
                 {
                     jsonRequest = JsonConvert.SerializeObject(request);
@@ -60,7 +72,17 @@ namespace Client.Dialog
                     sSender.Send(msg);
                     int bytesRec = sSender.Receive(bytes);
                     jsonResponse = Encoding.UTF8.GetString(bytes, 0, bytesRec);
-                    DialogResult = DialogResult.OK;
+                    if (jsonResponse.Contains(notFound))
+                    {
+                        MessageBox.Show("Ключ не найден");
+                        DialogResult = DialogResult.None;
+                    }
+                    else
+                    {
+                        JObject airplaneObject = JObject.Parse(jsonResponse);
+                        airplaneDetails = (airplaneObject["Airplane"]["Manufacturer"].ToString(), airplaneObject["Airplane"]["Model"].ToString());
+                        DialogResult = DialogResult.OK;
+                    }
                 }
                 catch (Exception ex)
                 {

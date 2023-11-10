@@ -157,7 +157,7 @@ namespace Server
             {
                 try
                 {
-                    using (StreamWriter jsonStreamWriter = File.CreateText("test.txt"))
+                    using (StreamWriter jsonStreamWriter = File.CreateText("airplanedb.txt"))
                     {
                         JsonSerializer jsonSerializer = new JsonSerializer { Formatting = Formatting.Indented };
                         jsonSerializer.Serialize(jsonStreamWriter, _airplanes);
@@ -177,7 +177,7 @@ namespace Server
             try
             {
                 JsonSerializer jsonSerializer = new JsonSerializer();
-                using (StreamReader jsonStreamReader = File.OpenText("test.txt"))
+                using (StreamReader jsonStreamReader = File.OpenText("airplanedb.txt"))
                 {
                     _airplanes = (ConcurrentDictionary<string, Airplane>)jsonSerializer.Deserialize(jsonStreamReader, typeof(ConcurrentDictionary<string, Airplane>));
                     jsonStreamReader.Close();

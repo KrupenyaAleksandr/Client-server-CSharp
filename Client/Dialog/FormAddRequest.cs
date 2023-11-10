@@ -40,17 +40,18 @@ namespace Client.Dialog
         }
         private void buttonRequestOK_Click(object sender, EventArgs e)
         {
-            request.Airplane = new Airplane();
-            request.Key = textBoxKey.Text;
-            request.Airplane.Manufacturer = textBoxManufacturer.Text;
-            request.Airplane.Model = textBoxModel.Text;
-            request.Type = RequestType.Add;
-            if (!request.isValid)
+            if (textBoxKey.Text == "" || textBoxManufacturer.Text == "" || textBoxModel.Text == "")
             {
-                MessageBox.Show("Неккоректный запрос.");
+                MessageBox.Show("Некорректный запрос");
+                DialogResult = DialogResult.None;
             }
             else
             {
+                request.Airplane = new Airplane();
+                request.Key = textBoxKey.Text;
+                request.Airplane.Manufacturer = textBoxManufacturer.Text;
+                request.Airplane.Model = textBoxModel.Text;
+                request.Type = RequestType.Add;
                 try
                 {
                     jsonRequest = JsonConvert.SerializeObject(request);

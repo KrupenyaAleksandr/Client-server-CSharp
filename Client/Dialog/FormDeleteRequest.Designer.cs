@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.labelKey = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxKey = new System.Windows.Forms.TextBox();
             this.buttonRequestCancel = new System.Windows.Forms.Button();
             this.buttonRequestOK = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -43,12 +43,12 @@
             this.labelKey.TabIndex = 7;
             this.labelKey.Text = "Key";
             // 
-            // textBox1
+            // textBoxKey
             // 
-            this.textBox1.Location = new System.Drawing.Point(90, 64);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(120, 20);
-            this.textBox1.TabIndex = 6;
+            this.textBoxKey.Location = new System.Drawing.Point(90, 64);
+            this.textBoxKey.Name = "textBoxKey";
+            this.textBoxKey.Size = new System.Drawing.Size(120, 20);
+            this.textBoxKey.TabIndex = 6;
             // 
             // buttonRequestCancel
             // 
@@ -78,7 +78,7 @@
             this.Controls.Add(this.buttonRequestCancel);
             this.Controls.Add(this.buttonRequestOK);
             this.Controls.Add(this.labelKey);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBoxKey);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormDeleteRequest";
@@ -90,7 +90,7 @@
 
         #endregion
         private System.Windows.Forms.Label labelKey;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxKey;
         private System.Windows.Forms.Button buttonRequestCancel;
         private System.Windows.Forms.Button buttonRequestOK;
     }

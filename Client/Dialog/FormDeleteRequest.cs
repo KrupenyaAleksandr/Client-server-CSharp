@@ -21,6 +21,7 @@ namespace Client.Dialog
         Socket sSender = null;
         byte[] bytes = new byte[10240];
         string jsonResponse;
+        string notFound = "\"isSuccess\":false";
         public FormDeleteRequest()
         {
             InitializeComponent();
@@ -40,14 +41,15 @@ namespace Client.Dialog
 
         private void buttonRequestOK_Click(object sender, EventArgs e)
         {
-            request.Type = RequestType.Delete;
-            request.Key = textBox1.Text;
-            if (request.Key == string.Empty)
+            if (textBoxKey.Text == "")
             {
                 MessageBox.Show("Некорректный запрос");
+                DialogResult = DialogResult.None;
             }
             else
             {
+                request.Type = RequestType.Delete;
+                request.Key = textBoxKey.Text;
                 try
                 {
                     jsonRequest = JsonConvert.SerializeObject(request);
@@ -55,7 +57,12 @@ namespace Client.Dialog
                     sSender.Send(msg);
                     int bytesRec = sSender.Receive(bytes);
                     jsonResponse = Encoding.UTF8.GetString(bytes, 0, bytesRec);
-                    DialogResult = DialogResult.OK;
+                    if (jsonResponse.Contains(notFound))
+                    {
+                        MessageBox.Show("Ключ не найден");
+                        DialogResult = DialogResult.None;
+                    }
+                    else DialogResult = DialogResult.OK;
                 }
                 catch (Exception ex)
                 {
