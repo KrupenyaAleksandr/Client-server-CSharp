@@ -1,4 +1,6 @@
-﻿namespace ClassLibraryBackend
+﻿using ClassLibraryBackend.Exception;
+
+namespace ClassLibraryBackend
 {
     /// <summary>
     /// Ответ
@@ -8,7 +10,8 @@
         /// <summary>
         /// Сообщение об ошибке
         /// </summary>
-        public string? ErrorMessage { get; set; }
+        public string ErrorMessage { get; set; }
+        //public InvalidKeyException InvalidKeyException { get; set; }
         /// <summary>
         /// Статус выполнения
         /// </summary>
@@ -20,6 +23,6 @@
         /// <summary>
         /// Объект
         /// </summary>
-        public Airplane? Airplane { get; set; }
+        public Airplane Airplane { get; set; }
     }
 }

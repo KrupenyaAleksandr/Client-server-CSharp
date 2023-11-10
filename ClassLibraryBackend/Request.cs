@@ -12,7 +12,7 @@
         /// <summary>
         /// Ключ
         /// </summary>
-        public string Key {  get; set; }
+        public string Key { get; set; }
         /// <summary>
         /// Объект
         /// </summary>
